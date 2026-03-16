@@ -16,3 +16,10 @@ export const fetchRegions = () =>
 // récupère les années disponibles dans la base de données
 export const fetchAnnees = () =>
   client.get('/api/statistiques/annees').then(r => r.data)
+
+export const fetchDepartements = (params = {}) =>
+  client.get('/api/departements', { params }).then(r => r.data)
+
+// récupère un département par son code
+export const fetchDepartement = (code) =>
+  client.get(`/api/departements/${code}`).then(r => r.data)
