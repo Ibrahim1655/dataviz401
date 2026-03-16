@@ -5,12 +5,9 @@ namespace App\Controller;
 use App\Repository\RegionRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/api')]
 class RegionController extends AbstractController
 {
-    #[Route('/regions', methods: ['GET'])]
     public function index(RegionRepository $regionRepository): JsonResponse
     {
         $regions = $regionRepository->findAll();
@@ -26,7 +23,6 @@ class RegionController extends AbstractController
         return $this->json($data);
     }
 
-    #[Route('/regions/{code}', methods: ['GET'])]
     public function show(string $code, RegionRepository $regionRepository): JsonResponse
     {
         $region = $regionRepository->find($code);

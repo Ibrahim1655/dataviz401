@@ -6,9 +6,7 @@ use App\Repository\StatistiquesDepartementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/api')]
 class StatistiquesController extends AbstractController
 {
     private function formatStatistique($stat): array
@@ -41,7 +39,6 @@ class StatistiquesController extends AbstractController
     }
 
     // GET /api/statistiques — toutes les stats (filtrable par ?annee=, ?region=, ?departement=)
-    #[Route('/statistiques', methods: ['GET'])]
     public function index(Request $request, StatistiquesDepartementRepository $repo): JsonResponse
     {
         $qb = $repo->createQueryBuilder('s')
@@ -71,7 +68,6 @@ class StatistiquesController extends AbstractController
     }
 
     // GET /api/statistiques/{id} — une stat précise
-    #[Route('/statistiques/{id}', methods: ['GET'])]
     public function show(int $id, StatistiquesDepartementRepository $repo): JsonResponse
     {
         $stat = $repo->find($id);
@@ -84,7 +80,6 @@ class StatistiquesController extends AbstractController
     }
 
     // GET /api/statistiques/annees — liste des années disponibles
-    #[Route('/statistiques/annees', methods: ['GET'], priority: 1)]
     public function annees(StatistiquesDepartementRepository $repo): JsonResponse
     {
         $annees = $repo->createQueryBuilder('s')
@@ -97,7 +92,6 @@ class StatistiquesController extends AbstractController
     }
 
     // GET /api/statistiques/region/{codeRegion} — stats agrégées par région
-    #[Route('/statistiques/region/{codeRegion}', methods: ['GET'])]
     public function byRegion(string $codeRegion, Request $request, StatistiquesDepartementRepository $repo): JsonResponse
     {
         $qb = $repo->createQueryBuilder('s')

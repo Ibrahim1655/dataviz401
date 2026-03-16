@@ -6,12 +6,9 @@ use App\Repository\DepartementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/api')]
 class DepartementController extends AbstractController
 {
-    #[Route('/departements', methods: ['GET'])]
     public function index(Request $request, DepartementRepository $departementRepository): JsonResponse
     {
         $regionCode = $request->query->get('region');
@@ -37,7 +34,6 @@ class DepartementController extends AbstractController
         return $this->json($data);
     }
 
-    #[Route('/departements/{code}', methods: ['GET'])]
     public function show(string $code, DepartementRepository $departementRepository): JsonResponse
     {
         $dept = $departementRepository->find($code);
