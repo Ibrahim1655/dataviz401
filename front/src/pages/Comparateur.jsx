@@ -189,117 +189,129 @@ export default function Comparateur() {
   // ── Rendu ────────────────────────────────────────────────────────────────
 
   return (
-    <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-gray-800">Comparateur</h1>
+    <div className="p-6 space-y-8 max-w-7xl mx-auto">
+
+      <div>
+        <h1 className="text-2xl font-bold">Comparateur</h1>
+        <p className="text-base-content/50 text-sm mt-1">
+          Comparez jusqu'à {MAX_DEPT} départements — données {year}
+        </p>
+      </div>
 
       {/* bloc de sélection des départements */}
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-4">
-        <h2 className="font-semibold text-gray-700">
-          Ajouter des départements{" "}
-          <span className="text-sm font-normal text-gray-400">
-            (max {MAX_DEPT})
-          </span>
-        </h2>
+      <div className="card bg-base-200 shadow">
+        <div className="card-body space-y-4">
+          <h2 className="card-title text-sm font-semibold uppercase tracking-widest text-base-content/50">
+            Ajouter des départements{" "}
+            <span className="font-normal normal-case text-base-content/40">
+              (max {MAX_DEPT})
+            </span>
+          </h2>
 
-        <div className="flex gap-3 flex-wrap">
-          {/* filtre par région pour réduire la liste de départements */}
-          <select
-            className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
-            value={selectedRegion}
-            onChange={(e) => setSelectedRegion(e.target.value)}
-          >
-            <option value="">Toutes les régions</option>
-            {regions.map((r) => (
-              <option key={r.code} value={r.code}>
-                {r.nom}
-              </option>
-            ))}
-          </select>
-
-          {/* select pour choisir un département à ajouter */}
-          {/* on remet la valeur à "" après chaque sélection pour pouvoir re-sélectionner */}
-          <select
-            className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 flex-1 min-w-40"
-            disabled={selectedDepts.length >= MAX_DEPT}
-            onChange={(e) => {
-              const dept = departements.find((d) => d.code === e.target.value);
-              if (dept) addDept(dept);
-              e.target.value = ""; // reset du select
-            }}
-            value=""
-          >
-            <option value="" disabled>
-              Choisir un département…
-            </option>
-            {/* on filtre les depts déjà sélectionnés pour pas les afficher */}
-            {departements
-              .filter((d) => !selectedDepts.find((s) => s.code === d.code))
-              .map((d) => (
-                <option key={d.code} value={d.code}>
-                  {d.nom} ({d.code})
+          <div className="flex gap-3 flex-wrap">
+            {/* filtre par région pour réduire la liste de départements */}
+            <select
+              className="select select-bordered select-sm"
+              value={selectedRegion}
+              onChange={(e) => setSelectedRegion(e.target.value)}
+            >
+              <option value="">Toutes les régions</option>
+              {regions.map((r) => (
+                <option key={r.code} value={r.code}>
+                  {r.nom}
                 </option>
               ))}
-          </select>
-        </div>
+            </select>
 
-        {/* chips des départements sélectionnés, avec la couleur du graphique */}
-        {selectedDepts.length > 0 && (
-          <div className="flex flex-wrap gap-2">
-            {selectedDepts.map((d, i) => (
-              <span
-                key={d.code}
-                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium text-white"
-                style={{ backgroundColor: PALETTE[i] }} // même couleur que dans le graphique
-              >
-                {d.nom}
-                {/* bouton × pour retirer le département */}
-                <button
-                  onClick={() => removeDept(d.code)}
-                  className="opacity-75 hover:opacity-100 transition-opacity"
-                >
-                  ×
-                </button>
-              </span>
-            ))}
+            {/* select pour choisir un département à ajouter */}
+            {/* on remet la valeur à "" après chaque sélection pour pouvoir re-sélectionner */}
+            <select
+              className="select select-bordered select-sm flex-1 min-w-40"
+              disabled={selectedDepts.length >= MAX_DEPT}
+              onChange={(e) => {
+                const dept = departements.find((d) => d.code === e.target.value);
+                if (dept) addDept(dept);
+                e.target.value = ""; // reset du select
+              }}
+              value=""
+            >
+              <option value="" disabled>
+                Choisir un département…
+              </option>
+              {/* on filtre les depts déjà sélectionnés pour pas les afficher */}
+              {departements
+                .filter((d) => !selectedDepts.find((s) => s.code === d.code))
+                .map((d) => (
+                  <option key={d.code} value={d.code}>
+                    {d.nom} ({d.code})
+                  </option>
+                ))}
+            </select>
           </div>
-        )}
+
+          {/* chips des départements sélectionnés, avec la couleur du graphique */}
+          {selectedDepts.length > 0 && (
+            <div className="flex flex-wrap gap-2">
+              {selectedDepts.map((d, i) => (
+                <span
+                  key={d.code}
+                  className="badge gap-1.5 text-white border-none"
+                  style={{ backgroundColor: PALETTE[i] }} // même couleur que dans le graphique
+                >
+                  {d.nom}
+                  {/* bouton × pour retirer le département */}
+                  <button
+                    onClick={() => removeDept(d.code)}
+                    className="opacity-75 hover:opacity-100 transition-opacity"
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* graphique comparatif en barres - s'affiche seulement si on a des depts */}
       {selectedDepts.length > 0 && (
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-4">
-          <div className="flex items-center justify-between flex-wrap gap-3">
-            <h2 className="font-semibold text-gray-700">
-              Comparaison — {year}
-            </h2>
-            {/* select pour changer l'indicateur à comparer */}
-            <select
-              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
-              value={indicateur}
-              onChange={(e) => setIndicateur(e.target.value)}
-            >
-              {KPIS.map((k) => (
-                <option key={k.key} value={k.key}>
-                  {k.label}
-                </option>
-              ))}
-            </select>
-          </div>
+        <div className="card bg-base-200 shadow">
+          <div className="card-body space-y-4">
+            <div className="flex items-center justify-between flex-wrap gap-3">
+              <h2 className="card-title text-sm font-semibold uppercase tracking-widest text-base-content/50">
+                Comparaison — {year}
+              </h2>
+              {/* select pour changer l'indicateur à comparer */}
+              <select
+                className="select select-bordered select-sm"
+                value={indicateur}
+                onChange={(e) => setIndicateur(e.target.value)}
+              >
+                {KPIS.map((k) => (
+                  <option key={k.key} value={k.key}>
+                    {k.label}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-          {/* affiche un message pendant le chargement */}
-          {isLoading ? (
-            <p className="text-gray-400 text-sm">Chargement…</p>
-          ) : (
-            <Bar data={barData} options={barOptions} />
-          )}
+            {/* affiche un spinner pendant le chargement */}
+            {isLoading ? (
+              <div className="flex justify-center py-12">
+                <span className="loading loading-spinner loading-lg text-primary" />
+              </div>
+            ) : (
+              <Bar data={barData} options={barOptions} />
+            )}
+          </div>
         </div>
       )}
 
       {/* message si aucun département sélectionné */}
       {selectedDepts.length === 0 && (
-        <p className="text-center text-gray-400 py-16">
-          Sélectionnez au moins un département pour commencer.
-        </p>
+        <div className="alert">
+          <span>Sélectionnez au moins un département pour commencer.</span>
+        </div>
       )}
     </div>
   );
