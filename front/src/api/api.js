@@ -24,3 +24,11 @@ export const fetchDepartements = (params = {}) =>
 // récupère un département par son code
 export const fetchDepartement = (code) =>
   client.get(`/api/departements/${code}`).then((r) => r.data);
+
+// récupère une région par son code (avec ses départements)
+export const fetchRegion = (code) =>
+  client.get(`/api/regions/${code}`).then((r) => r.data);
+
+// récupère les statistiques des départements d'une région
+export const fetchStatistiquesByRegion = (codeRegion, params = {}) =>
+  client.get(`/api/statistiques/region/${codeRegion}`, { params }).then((r) => r.data);

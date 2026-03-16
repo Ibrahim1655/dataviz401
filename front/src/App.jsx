@@ -3,7 +3,8 @@ import Layout from "./components/Layout";
 import Dashboard from "./pages/Dashboard";
 import Departements from "./pages/departement";
 import DepartementDetail from "./pages/DepartementDetail";
-import PlaceholderPage from "./components/PlaceholderPage";
+import Regions from "./pages/Regions";
+import RegionDetail from "./pages/RegionDetail";
 import Comparateur from "./pages/Comparateur";
 
 export default function App() {
@@ -12,10 +13,8 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path="/" element={<Dashboard />} />
-          <Route
-            path="/regions"
-            element={<PlaceholderPage title="Régions" />}
-          />
+          <Route path="/regions" element={<Regions />} />
+          <Route path="/regions/:code" element={<RegionDetail />} />
           <Route path="/departements" element={<Departements />} />
           <Route path="/departements/:code" element={<DepartementDetail />} />
           <Route path="/comparateur" element={<Comparateur />} />
