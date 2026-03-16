@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Departements from "./pages/departement";
 import DepartementDetail from "./pages/DepartementDetail";
 import PlaceholderPage from "./components/PlaceholderPage";
+import Comparateur from "./pages/Comparateur";
 
 export default function App() {
   return (
@@ -17,10 +18,7 @@ export default function App() {
           />
           <Route path="/departements" element={<Departements />} />
           <Route path="/departements/:code" element={<DepartementDetail />} />
-          <Route
-            path="/comparateur"
-            element={<PlaceholderPage title="Comparateur" />}
-          />
+          <Route path="/comparateur" element={<Comparateur />} />
         </Route>
       </Routes>
     </BrowserRouter>
