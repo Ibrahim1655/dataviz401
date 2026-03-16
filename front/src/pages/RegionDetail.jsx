@@ -234,33 +234,33 @@ export default function RegionDetail() {
                       {[...currentStats]
                         .sort((a, b) => (a.departement?.nom ?? '').localeCompare(b.departement?.nom ?? '', 'fr'))
                         .map(s => (
-                        <tr key={s.id} className="hover">
-                          <td className="font-mono text-xs text-base-content/50 w-12">
-                            {s.departement?.code}
-                          </td>
-                          <td className="font-medium">
-                            <Link to={`/departements/${s.departement?.code}`} className="link link-hover link-primary">
-                              {s.departement?.nom}
-                            </Link>
-                          </td>
-                          <td className="text-right font-mono text-sm">
-                            {fmt(s.nombreHabitants, 0)}
-                          </td>
-                          <td className="text-right font-mono text-sm">
-                            {s.tauxLogementsSociaux !== null ? (
-                              <span className="font-semibold text-primary">
-                                {fmt(s.tauxLogementsSociaux)} %
-                              </span>
-                            ) : '—'}
-                          </td>
-                          <td className="text-right font-mono text-sm">
-                            {s.tauxChomageT4 !== null ? `${fmt(s.tauxChomageT4)} %` : '—'}
-                          </td>
-                          <td className="text-right font-mono text-sm">
-                            {s.tauxPauvrete !== null ? `${fmt(s.tauxPauvrete)} %` : '—'}
-                          </td>
-                        </tr>
-                      ))}
+                          <tr key={s.id} className="hover">
+                            <td className="font-mono text-xs text-base-content/50 w-12">
+                              {s.departement?.code}
+                            </td>
+                            <td className="font-medium">
+                              <Link to={`/departements/${s.departement?.code}`} className="link link-hover link-primary">
+                                {s.departement?.nom}
+                              </Link>
+                            </td>
+                            <td className="text-right font-mono text-sm">
+                              {fmt(s.nombreHabitants, 0)}
+                            </td>
+                            <td className="text-right font-mono text-sm">
+                              {s.tauxLogementsSociaux !== null ? (
+                                <span className="font-semibold text-primary">
+                                  {fmt(s.tauxLogementsSociaux)} %
+                                </span>
+                              ) : '—'}
+                            </td>
+                            <td className="text-right font-mono text-sm">
+                              {s.tauxChomageT4 !== null ? `${fmt(s.tauxChomageT4)} %` : '—'}
+                            </td>
+                            <td className="text-right font-mono text-sm">
+                              {s.tauxPauvrete !== null ? `${fmt(s.tauxPauvrete)} %` : '—'}
+                            </td>
+                          </tr>
+                        ))}
                     </tbody>
                   </table>
                 </div>
